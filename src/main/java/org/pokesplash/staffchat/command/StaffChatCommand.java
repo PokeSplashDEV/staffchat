@@ -53,6 +53,12 @@ public class StaffChatCommand {
 		String senderName;
 
 		if (context.getSource().isExecutedByPlayer()) {
+			if (!PermissionHandler.hasPermission(context.getSource().getPlayer().getUuid(),
+					PermissionHandler.SEND_PERMISSION)) {
+				return 1;
+			}
+
+
 			senderName = context.getSource().getPlayer().getName().getString();
 		} else {
 			senderName = "Server";

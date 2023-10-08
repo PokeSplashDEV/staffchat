@@ -9,6 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import org.pokesplash.staffchat.StaffChat;
+import org.pokesplash.staffchat.discord.Webhook;
 import org.pokesplash.staffchat.message.MessageHandler;
 import org.pokesplash.staffchat.permission.PermissionHandler;
 
@@ -52,22 +53,25 @@ public class StaffChatCommand {
 
 		String senderName;
 
+		String message = StringArgumentType.getString(context, "args");
+
 		if (context.getSource().isExecutedByPlayer()) {
 			if (!PermissionHandler.hasPermission(context.getSource().getPlayer().getUuid(),
 					PermissionHandler.SEND_PERMISSION)) {
 				return 1;
 			}
-
-
 			senderName = context.getSource().getPlayer().getName().getString();
 		} else {
 			senderName = "Server";
 		}
 
-		String message = StringArgumentType.getString(context, "args");
-
 		MessageHandler.sendMessage(context.getSource().getServer().getPlayerManager().getPlayerList(),
 				senderName, message);
+
+		if (StaffChat.config.isUseDiscord() && context.getSource().isExecutedByPlayer()) {
+			Webhook.sendMessage(context.getSource().getPlayer(), message);
+		}
+
 		return 1;
 	}
 

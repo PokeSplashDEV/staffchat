@@ -8,13 +8,25 @@ import java.util.concurrent.CompletableFuture;
 
 public class Config {
 	private String message;
+	private boolean useDiscord;
+	private String discordUrl;
 
 	public Config() {
 		message = "<dark_aqua>[StaffChat] {player}: {message}";
+		useDiscord = false;
+		discordUrl = "";
 	}
 
 	public String getMessage() {
 		return message;
+	}
+
+	public boolean isUseDiscord() {
+		return useDiscord;
+	}
+
+	public String getDiscordUrl() {
+		return discordUrl;
 	}
 
 	public void init() {
@@ -23,6 +35,8 @@ public class Config {
 					Gson gson = Utils.newGson();
 					Config cfg = gson.fromJson(el, Config.class);
 					message = cfg.getMessage();
+					discordUrl = cfg.getDiscordUrl();
+					useDiscord = cfg.isUseDiscord();
 				});
 
 		if (!futureRead.join()) {

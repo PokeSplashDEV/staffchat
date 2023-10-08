@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "staffchat",
+  "version": "${version}",
+  "name": "StaffChat",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Ben/StaffChat"
+  },
+  "license": "MIT",
+  "icon": "assets/staffchat/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "client": [
+      "org.pokesplash.staffchat.client.StaffChatClient"
+    ],
+    "main": [
+      "org.pokesplash.staffchat.StaffChat"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

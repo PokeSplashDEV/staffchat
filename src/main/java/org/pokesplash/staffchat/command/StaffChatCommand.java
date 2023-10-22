@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.pokesplash.staffchat.StaffChat;
 import org.pokesplash.staffchat.discord.Webhook;
@@ -51,7 +52,7 @@ public class StaffChatCommand {
 
 	public int run(CommandContext<ServerCommandSource> context) {
 
-		String senderName;
+		ServerPlayerEntity senderName;
 
 		String message = StringArgumentType.getString(context, "args");
 
@@ -60,9 +61,9 @@ public class StaffChatCommand {
 					PermissionHandler.SEND_PERMISSION)) {
 				return 1;
 			}
-			senderName = context.getSource().getPlayer().getName().getString();
+			senderName = context.getSource().getPlayer();
 		} else {
-			senderName = "Server";
+			senderName = null;
 		}
 
 		MessageHandler.sendMessage(context.getSource().getServer().getPlayerManager().getPlayerList(),
